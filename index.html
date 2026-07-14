@@ -4,226 +4,285 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prompt Hub</title>
+    <title>AI Prompt Hub</title>
+    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { scroll-behavior: smooth; }
-        .fade-slide { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
-        .fade-slide.visible { opacity: 1; transform: translateY(0); }
-        .hero-shadow { box-shadow: 0 40px 120px -60px rgba(99, 102, 241, 0.75); }
-    </style>
 </head>
 
-<body class="bg-slate-950 text-slate-100 font-sans min-h-screen">
-    <header id="home" class="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/95 backdrop-blur-xl">
-        <div class="container mx-auto flex flex-col lg:flex-row items-center justify-between gap-4 px-6 py-4">
-            <div class="flex items-center gap-4">
-                <div class="flex h-14 w-14 items-center justify-center rounded-3xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 shadow-lg shadow-indigo-500/20">
-                    <i class="fa-solid fa-wand-magic-sparkles text-white text-xl"></i>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen" style="background-image: radial-gradient(circle at top left, rgba(99, 102, 241, 0.18), transparent 32%), radial-gradient(circle at top right, rgba(236, 72, 153, 0.14), transparent 28%), linear-gradient(180deg, #020617 0%, #111827 100%);">
+
+    <!-- Header Section -->
+    <header class="relative border-b border-slate-800/80 py-6 bg-slate-950/95 backdrop-blur-xl sticky top-0 z-50 shadow-2xl shadow-slate-950/40">
+        <div class="absolute -left-10 -top-10 h-40 w-40 rounded-full bg-indigo-500/20 blur-3xl"></div>
+        <div class="absolute right-0 top-0 h-32 w-32 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+        <div class="container mx-auto px-4 relative z-10 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex flex-col gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="flex h-16 w-16 items-center justify-center rounded-[28px] bg-gradient-to-br from-indigo-500 to-fuchsia-500 shadow-[0_20px_80px_-40px_rgba(99,102,241,0.9)]">
+                        <i class="fa-solid fa-wand-magic-sparkles text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl md:text-4xl font-black tracking-[0.25em] text-white uppercase drop-shadow-lg">PROMPT HUB</h1>
+                        <p class="mt-2 text-sm text-slate-400 max-w-xl">Explore premium AI prompts for Midjourney and DALL-E 3, with lightning search and copy-ready cards.</p>
+                    </div>
                 </div>
-                <div>
-                    <a href="#home" class="text-xl font-bold uppercase tracking-[0.25em] text-white">Prompt Hub</a>
-                    <p class="text-xs uppercase tracking-[0.35em] text-slate-500 mt-1">AI prompt + photo flow</p>
-                </div>
+                <nav class="flex flex-wrap items-center gap-3 rounded-full border border-slate-800/70 bg-slate-900/70 px-4 py-2 shadow-sm shadow-slate-950/20">
+                    <a href="#" class="text-sm font-medium text-slate-200 hover:text-white transition">Home</a>
+                    <div class="relative group">
+                        <a href="#" class="text-sm font-medium text-slate-200 hover:text-white transition inline-flex items-center gap-1">Prompts <i class="fa-solid fa-caret-down text-xs"></i></a>
+                        <div class="absolute left-0 top-full z-50 mt-2 hidden min-w-[12rem] rounded-3xl border border-slate-800/70 bg-slate-950/95 p-3 shadow-xl shadow-slate-950/30 group-hover:block">
+                            <p class="text-xs uppercase tracking-[0.22em] text-slate-400 mb-2">Gemini AI</p>
+                            <a href="#" class="block rounded-2xl px-3 py-2 text-sm text-slate-200 hover:bg-slate-800 hover:text-white transition">Gemini Pro</a>
+                            <a href="#" class="block rounded-2xl px-3 py-2 text-sm text-slate-200 hover:bg-slate-800 hover:text-white transition">Gemini Ultra</a>
+                            <a href="#" class="block rounded-2xl px-3 py-2 text-sm text-slate-200 hover:bg-slate-800 hover:text-white transition">Gemini Nano</a>
+                        </div>
+                    </div>
+                    <a href="#" class="text-sm font-medium text-slate-200 hover:text-white transition">Models</a>
+                    <a href="#" class="text-sm font-medium text-slate-200 hover:text-white transition">About</a>
+                    <a href="#" class="text-sm font-medium text-slate-200 hover:text-white transition">Contact</a>
+                </nav>
             </div>
-            <nav class="flex flex-wrap items-center gap-4 text-sm text-slate-300">
-                <a href="#home" class="hover:text-white transition">Home</a>
-                <a href="#prompts" class="hover:text-white transition">Prompts</a>
-                <a href="#photo-flow" class="hover:text-white transition">Photo Flow</a>
-                <a href="#about" class="hover:text-white transition">About</a>
-                <a href="#contact" class="hover:text-white transition">Contact</a>
-            </nav>
+
+            <!-- Search Bar -->
+            <div class="relative w-full md:w-96">
+                <input type="text" id="searchInput" onkeyup="searchPrompts()" placeholder="Search prompts..." class="w-full bg-slate-800/90 text-slate-100 rounded-3xl px-4 py-3 pl-12 focus:outline-none focus:ring-2 focus:ring-indigo-500 border border-slate-700/80 shadow-sm shadow-slate-950/20 transition duration-300">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+            </div>
         </div>
     </header>
 
-    <main>
-        <section class="relative overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(99,102,241,0.2),_transparent_32%),_radial-gradient(circle_at_top_right,_rgba(236,72,153,0.16),_transparent_30%),_linear-gradient(180deg,_#020617_0%,_#111827_100%)] py-20">
-            <div class="container mx-auto px-6">
-                <div class="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] items-center">
-                    <div class="space-y-6">
-                        <span class="inline-flex items-center gap-2 rounded-full bg-indigo-500/10 px-4 py-2 text-xs uppercase tracking-[0.35em] text-indigo-300">Prompt + Photo</span>
-                        <h1 class="text-5xl font-black leading-tight text-white">Smooth AI prompt page with photo-ready cards.</h1>
-                        <p class="max-w-3xl text-slate-400 leading-8">A single page for your prompt workflow: choose a photo, read its prompt, and copy it instantly. Designed to feel clean, fast and modern.</p>
-                        <div class="flex flex-wrap gap-4">
-                            <a href="#prompts" class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition hover:-translate-y-1">View prompts</a>
-                            <a href="#photo-flow" class="inline-flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/90 px-6 py-3 text-sm font-semibold text-slate-200 transition hover:border-indigo-500 hover:text-white">Photo flow</a>
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-10">
+        <div class="rounded-[36px] border border-slate-800/70 bg-slate-950/70 p-6 shadow-2xl shadow-slate-950/30 backdrop-blur-xl mb-10">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-xl md:text-2xl font-semibold text-white">Filter prompts by model</h2>
+                    <p class="mt-2 text-sm text-slate-400 max-w-2xl">Use the buttons below to narrow the collection. Tap any card to copy the prompt instantly.</p>
+                </div>
+                <div class="flex gap-3 flex-wrap justify-center md:justify-end">
+                    <button onclick="filterModel(event, 'all')" class="filter-btn bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 text-white px-5 py-2 rounded-full text-sm font-semibold shadow-lg shadow-indigo-500/20 transition duration-300">All</button>
+                    <button onclick="filterModel(event, 'midjourney')" class="filter-btn bg-slate-800 hover:bg-slate-700 text-slate-200 px-5 py-2 rounded-full text-sm font-semibold transition duration-300">Midjourney</button>
+                    <button onclick="filterModel(event, 'dalle')" class="filter-btn bg-slate-800 hover:bg-slate-700 text-slate-200 px-5 py-2 rounded-full text-sm font-semibold transition duration-300">DALL-E 3</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prompts Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6" id="promptGrid">
+
+            <!-- Prompt Card 1 (Midjourney) -->
+            <div class="prompt-card group relative overflow-hidden rounded-[30px] border border-slate-800/80 bg-slate-950/95 p-0 shadow-[0_30px_75px_-40px_rgba(99,102,241,0.75)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_30px_90px_-40px_rgba(99,102,241,0.55)]" data-model="midjourney">
+                <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=900" alt="Cyberpunk City" class="w-full h-56 object-cover transition duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>
+                </div>
+                <div class="p-6">
+                    <div class="inline-flex items-center gap-2 rounded-full border border-indigo-500/20 bg-indigo-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-indigo-200">
+                        <span class="h-2 w-2 rounded-full bg-indigo-300 shadow-[0_0_10px_rgba(99,102,241,0.7)]"></span>
+                        Midjourney
+                    </div>
+                    <p class="text-slate-300 text-sm leading-6 mt-4 min-h-[5rem] prompt-text">"A futuristic cyberpunk city streets filled with neon lights, rainy night, cinematic lighting, 8k resolution, photorealistic."</p>
+                    <button onclick="copyPrompt(this)" class="mt-6 w-full rounded-3xl bg-gradient-to-r from-fuchsia-500 via-indigo-500 to-cyan-500 text-white font-semibold py-3 shadow-lg shadow-fuchsia-500/20 transition duration-300 hover:scale-[1.01] flex items-center justify-center gap-2">
+                        <i class="fa-regular fa-copy"></i> Copy Prompt
+                    </button>
+                </div>
+            </div>
+
+            <!-- Prompt Card 2 (DALL-E) -->
+            <div class="prompt-card group relative overflow-hidden rounded-[30px] border border-slate-800/80 bg-slate-950/95 p-0 shadow-[0_30px_75px_-40px_rgba(236,72,153,0.75)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_30px_90px_-40px_rgba(236,72,153,0.55)]" data-model="dalle">
+                <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=900" alt="Cute Astronaut" class="w-full h-56 object-cover transition duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>
+                </div>
+                <div class="p-6">
+                    <div class="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-200">
+                        <span class="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_10px_rgba(52,211,153,0.7)]"></span>
+                        DALL-E 3
+                    </div>
+                    <p class="text-slate-300 text-sm leading-6 mt-4 min-h-[5rem] prompt-text">"A cute 3D claymation astronaut sitting on a small moon, holding a cup of coffee, starry background, Pixar style."</p>
+                    <button onclick="copyPrompt(this)" class="mt-6 w-full rounded-3xl bg-gradient-to-r from-fuchsia-500 via-indigo-500 to-cyan-500 text-white font-semibold py-3 shadow-lg shadow-fuchsia-500/20 transition duration-300 hover:scale-[1.01] flex items-center justify-center gap-2">
+                        <i class="fa-regular fa-copy"></i> Copy Prompt
+                    </button>
+                </div>
+            </div>
+
+            <!-- Prompt Card 3 (Midjourney) -->
+            <div class="prompt-card group relative overflow-hidden rounded-[30px] border border-slate-800/80 bg-slate-950/95 p-0 shadow-[0_30px_75px_-40px_rgba(56,189,248,0.75)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_30px_90px_-40px_rgba(56,189,248,0.55)]" data-model="midjourney">
+                <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=900" alt="Abstract Art" class="w-full h-56 object-cover transition duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>
+                </div>
+                <div class="p-6">
+                    <div class="inline-flex items-center gap-2 rounded-full border border-indigo-500/20 bg-indigo-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-indigo-200">
+                        <span class="h-2 w-2 rounded-full bg-indigo-300 shadow-[0_0_10px_rgba(99,102,241,0.7)]"></span>
+                        Midjourney
+                    </div>
+                    <p class="text-slate-300 text-sm leading-6 mt-4 min-h-[5rem] prompt-text">"Abstract fluid art, swirling gold and royal blue colors, marble texture, metallic reflections, high contrast, elegant."</p>
+                    <button onclick="copyPrompt(this)" class="mt-6 w-full rounded-3xl bg-gradient-to-r from-fuchsia-500 via-indigo-500 to-cyan-500 text-white font-semibold py-3 shadow-lg shadow-fuchsia-500/20 transition duration-300 hover:scale-[1.01] flex items-center justify-center gap-2">
+                        <i class="fa-regular fa-copy"></i> Copy Prompt
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- AI Photo Workflow Section -->
+        <section class="container mx-auto px-4 py-16">
+            <div class="rounded-[36px] border border-slate-800/70 bg-slate-950/70 p-8 shadow-2xl shadow-slate-950/30 backdrop-blur-xl overflow-hidden mb-10">
+                <div class="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] items-center">
+                    <div class="space-y-5">
+                        <span class="inline-flex items-center rounded-full bg-indigo-500/10 text-indigo-300 px-3 py-1 text-xs uppercase tracking-[0.24em]">AI Photo Tools</span>
+                        <h2 class="text-3xl md:text-4xl font-bold text-white">Turn text prompts into images, and images into smarter prompt ideas.</h2>
+                        <p class="text-slate-400 max-w-2xl">Use AI tools like Midjourney, DALL-E 3 and Stable Diffusion for stunning image generation. Scroll down and watch the photos and descriptions appear as you go.</p>
+                    </div>
+                    <div class="grid gap-4">
+                        <div class="rounded-[30px] border border-slate-800/70 bg-slate-950/95 p-6 shadow-lg shadow-slate-950/20 transition duration-700 opacity-0 translate-y-8 reveal-card">
+                            <div class="flex items-center justify-between gap-4">
+                                <div class="space-y-2">
+                                    <p class="text-sm uppercase text-slate-400 tracking-[0.2em]">Prompt → Image</p>
+                                    <h3 class="text-xl font-semibold text-white">Midjourney / DALL-E 3</h3>
+                                </div>
+                                <span class="inline-flex items-center rounded-full bg-indigo-500/20 px-3 py-1 text-sm text-indigo-200">AI Tool</span>
+                            </div>
+                            <p class="mt-4 text-slate-400">Type a vivid prompt on the left and let AI build a photorealistic image on the right. Ideal for concept art, brand visuals and creative storytelling.</p>
+                        </div>
+                        <div class="rounded-[30px] border border-slate-800/70 bg-slate-950/95 p-6 shadow-lg shadow-slate-950/20 transition duration-700 opacity-0 translate-y-8 reveal-card">
+                            <div class="flex items-center justify-between gap-4">
+                                <div class="space-y-2">
+                                    <p class="text-sm uppercase text-slate-400 tracking-[0.2em]">Image → Prompt</p>
+                                    <h3 class="text-xl font-semibold text-white">Stable Diffusion / Leonardo</h3>
+                                </div>
+                                <span class="inline-flex items-center rounded-full bg-emerald-500/20 px-3 py-1 text-sm text-emerald-200">AI Tool</span>
+                            </div>
+                            <p class="mt-4 text-slate-400">Pick or preview an image and let the AI suggest the best prompt wording. Great for refining ideas and generating the perfect scene description.</p>
                         </div>
                     </div>
-                    <div class="relative rounded-[40px] border border-slate-800/70 bg-slate-900/90 p-5 hero-shadow">
-                        <div class="absolute -left-10 -top-10 h-36 w-36 rounded-full bg-indigo-500/20 blur-3xl"></div>
-                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1000" alt="AI prompt photo" class="h-[520px] w-full rounded-[34px] object-cover object-center shadow-2xl shadow-slate-950/50">
-                        <div class="mt-6 rounded-[32px] border border-slate-800/70 bg-slate-950/95 p-5">
-                            <p class="text-xs uppercase tracking-[0.32em] text-slate-500">Sample prompt</p>
-                            <h2 class="mt-3 text-xl font-semibold text-white">"Neon cyberpunk city at night, rain reflections, cinematic lighting, 8K"</h2>
-                            <button id="heroCopyButton" class="mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-fuchsia-500 via-indigo-500 to-cyan-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-fuchsia-500/20 transition hover:-translate-y-1">
-                                <i class="fa-regular fa-copy"></i> Copy prompt
-                            </button>
-                        </div>
+                </div>
+            </div>
+
+            <div class="grid gap-6 lg:grid-cols-2">
+                <div class="rounded-[40px] bg-slate-900/80 border border-slate-800/70 p-8 shadow-[0_30px_90px_-40px_rgba(99,102,241,0.65)] transition duration-700 opacity-0 translate-x-8 reveal-card">
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=900" alt="AI design work" class="h-72 w-full rounded-[28px] object-cover object-center shadow-xl">
+                    <div class="mt-6">
+                        <h3 class="text-2xl font-semibold text-white">From prompt to photo</h3>
+                        <p class="mt-3 text-slate-400">Enter descriptive phrases on the left and watch AI generate an image on the right. This workflow is perfect for quick visual concepting.</p>
                     </div>
+                </div>
+                <div class="rounded-[40px] bg-slate-900/80 border border-slate-800/70 p-8 shadow-[0_30px_90px_-40px_rgba(236,72,153,0.65)] transition duration-700 opacity-0 -translate-x-8 reveal-card">
+                    <div class="mt-2">
+                        <h3 class="text-2xl font-semibold text-white">From image to prompt</h3>
+                        <p class="mt-3 text-slate-400">Choose a sample photo on the right and let AI suggest prompt words on the left. This helps you refine ideas and generate polished visuals.</p>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1511715284441-49b8b2a2d201?w=900" alt="AI prompt suggestion" class="mt-6 h-72 w-full rounded-[28px] object-cover object-center shadow-xl">
                 </div>
             </div>
         </section>
 
-        <section id="prompts" class="py-20">
-            <div class="container mx-auto px-6">
-                <div class="max-w-3xl text-center mx-auto mb-12 fade-slide">
-                    <p class="text-sm uppercase tracking-[0.35em] text-indigo-300">Prompt collection</p>
-                    <h2 class="mt-4 text-4xl font-bold text-white">Prompt cards with preview images and copy buttons.</h2>
-                    <p class="mt-4 text-slate-400">Each card shows a photo example and a ready-to-copy prompt. Tap the button to use the prompt instantly.</p>
-                </div>
-                <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-                    <article class="fade-slide rounded-[32px] border border-slate-800/70 bg-slate-950/95 shadow-2xl shadow-slate-950/30 overflow-hidden transition duration-500 hover:-translate-y-1">
-                        <img src="https://images.unsplash.com/photo-1602524200281-8ac7b34a358b?w=900" alt="Futuristic city" class="h-56 w-full object-cover">
-                        <div class="p-6">
-                            <span class="inline-flex rounded-full bg-indigo-500/10 px-3 py-1 text-xs uppercase tracking-[0.35em] text-indigo-200">Midjourney</span>
-                            <h3 class="mt-4 text-xl font-semibold text-white">Cyberpunk city</h3>
-                            <p class="mt-3 text-slate-400 leading-7 prompt-text">"Futuristic cyberpunk city with neon reflections, rainy streets, moody atmosphere, cinematic details."</p>
-                            <button class="copy-btn mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-indigo-500 to-fuchsia-500 px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-1">
-                                <i class="fa-regular fa-copy"></i> Copy prompt
-                            </button>
-                        </div>
-                    </article>
-                    <article class="fade-slide rounded-[32px] border border-slate-800/70 bg-slate-950/95 shadow-2xl shadow-slate-950/30 overflow-hidden transition duration-500 hover:-translate-y-1">
-                        <img src="https://images.unsplash.com/photo-1549880338-65ddcdfd017b?w=900" alt="Dreamy landscape" class="h-56 w-full object-cover">
-                        <div class="p-6">
-                            <span class="inline-flex rounded-full bg-emerald-500/10 px-3 py-1 text-xs uppercase tracking-[0.35em] text-emerald-200">DALL-E 3</span>
-                            <h3 class="mt-4 text-xl font-semibold text-white">Dreamy landscape</h3>
-                            <p class="mt-3 text-slate-400 leading-7 prompt-text">"A dreamy pastel landscape with floating islands, soft light, and whimsical clouds, hyperrealistic style."</p>
-                            <button class="copy-btn mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-indigo-500 to-fuchsia-500 px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-1">
-                                <i class="fa-regular fa-copy"></i> Copy prompt
-                            </button>
-                        </div>
-                    </article>
-                    <article class="fade-slide rounded-[32px] border border-slate-800/70 bg-slate-950/95 shadow-2xl shadow-slate-950/30 overflow-hidden transition duration-500 hover:-translate-y-1">
-                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=900" alt="Modern portrait" class="h-56 w-full object-cover">
-                        <div class="p-6">
-                            <span class="inline-flex rounded-full bg-cyan-500/10 px-3 py-1 text-xs uppercase tracking-[0.35em] text-cyan-200">Gemini</span>
-                            <h3 class="mt-4 text-xl font-semibold text-white">Portrait concept</h3>
-                            <p class="mt-3 text-slate-400 leading-7 prompt-text">"Portrait of a creative visionary with soft shadows, cinematic light, and painterly texture."</p>
-                            <button class="copy-btn mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-indigo-500 to-fuchsia-500 px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-1">
-                                <i class="fa-regular fa-copy"></i> Copy prompt
-                            </button>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section id="photo-flow" class="py-20 bg-slate-950/95 border-t border-slate-900/80">
-            <div class="container mx-auto px-6">
-                <div class="grid gap-10 lg:grid-cols-2 items-center">
-                    <div class="fade-slide space-y-6">
-                        <span class="inline-flex items-center gap-2 rounded-full bg-slate-800/80 px-4 py-2 text-xs uppercase tracking-[0.35em] text-slate-300">Photo flow</span>
-                        <h2 class="text-4xl font-bold text-white">AI photo flow with left-right preview.</h2>
-                        <p class="text-slate-400 leading-8">Choose a photo on the left and read the prompt on the right. Or swap to see how an AI image inspires a fresh prompt.</p>
-                        <div class="grid gap-4">
-                            <div class="rounded-[28px] border border-slate-800/70 bg-slate-900/90 p-6">
-                                <h3 class="text-xl font-semibold text-white">Prompt from photo</h3>
-                                <p class="mt-3 text-slate-400 leading-7">Photo on the left, prompt text on the right — ideal for workflows that blend visual inspiration with AI prompt creation.</p>
-                            </div>
-                            <div class="rounded-[28px] border border-slate-800/70 bg-slate-900/90 p-6">
-                                <h3 class="text-xl font-semibold text-white">Photo tools</h3>
-                                <p class="mt-3 text-slate-400 leading-7">Use Gemini-like AI naming and copy the text instantly for better visual generation results.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="grid gap-6">
-                        <div class="fade-slide flex flex-col rounded-[32px] border border-slate-800/70 bg-slate-950/95 overflow-hidden shadow-2xl shadow-slate-950/30">
-                            <img src="https://images.unsplash.com/photo-1511715284441-49b8b2a2d201?w=900" alt="Prompt photo left" class="h-72 w-full object-cover">
-                            <div class="p-6">
-                                <h3 class="text-xl font-semibold text-white">Image on left</h3>
-                                <p class="mt-3 text-slate-400 leading-7">A strong photo with prompt text beside it gives a clear AI workflow: see the image, then copy the related description.</p>
-                            </div>
-                        </div>
-                        <div class="fade-slide flex flex-col rounded-[32px] border border-slate-800/70 bg-slate-950/95 overflow-hidden shadow-2xl shadow-slate-950/30">
-                            <div class="p-6">
-                                <h3 class="text-xl font-semibold text-white">Text on right</h3>
-                                <p class="mt-3 text-slate-400 leading-7">The right side shows prompt details, tool names, and copy actions, while the left side keeps the visual context front and center.</p>
-                            </div>
-                            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=900" alt="Prompt photo right" class="h-72 w-full object-cover">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="about" class="py-20">
-            <div class="container mx-auto px-6">
-                <div class="max-w-3xl text-center mx-auto fade-slide">
-                    <p class="text-sm uppercase tracking-[0.35em] text-indigo-300">About Prompt Hub</p>
-                    <h2 class="mt-4 text-4xl font-bold text-white">A page that combines AI prompts and photo inspiration.</h2>
-                    <p class="mt-4 text-slate-400 leading-8">Built to help you quickly find image prompts, copy them, and use AI tools like Gemini, Midjourney and DALL-E for creative visuals.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="py-20 bg-slate-950/95 border-t border-slate-900/80">
-            <div class="container mx-auto px-6">
-                <div class="rounded-[36px] border border-slate-800/70 bg-slate-900/90 p-10 shadow-2xl shadow-slate-950/40">
-                    <div class="grid gap-8 lg:grid-cols-2 items-center">
-                        <div class="fade-slide space-y-4">
-                            <p class="text-sm uppercase tracking-[0.35em] text-indigo-300">Get in touch</p>
-                            <h2 class="text-4xl font-bold text-white">Ready to use your next AI prompt?</h2>
-                            <p class="text-slate-400 leading-8">Copy any prompt, explore the gallery, and start generating images with your favorite AI tools.</p>
-                        </div>
-                        <div class="grid gap-4">
-                            <div class="rounded-[28px] border border-slate-800/70 bg-slate-950/95 p-6">
-                                <p class="text-slate-400">Email</p>
-                                <p class="mt-2 text-white">hello@prompthub.com</p>
-                            </div>
-                            <div class="rounded-[28px] border border-slate-800/70 bg-slate-950/95 p-6">
-                                <p class="text-slate-400">Location</p>
-                                <p class="mt-2 text-white">Colombo, Sri Lanka</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
-    <footer class="border-t border-slate-800/70 bg-slate-950/95 py-8">
-        <div class="container mx-auto px-6 text-center text-slate-500 text-sm">© 2026 Prompt Hub. Crafted for smooth AI prompt and photo flow.</div>
+    <!-- Footer -->
+    <footer class="bg-slate-950/95 border-t border-slate-800/80 py-12 mt-10">
+        <div class="container mx-auto px-4">
+            <div class="grid gap-10 lg:grid-cols-3">
+                <div class="space-y-4">
+                    <div class="inline-flex items-center gap-4">
+                        <div class="h-14 w-14 rounded-[28px] bg-gradient-to-br from-indigo-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                            <i class="fa-solid fa-wand-magic-sparkles text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-xl font-semibold text-white">Prompt Hub</p>
+                            <p class="text-slate-400 text-sm">AI prompt design studio with smart search and instant copy.</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-500 max-w-md">Create better prompts for creative AI workflows, and keep your designs smooth, modern and easy to use.</p>
+                </div>
+                <div class="space-y-4">
+                    <h3 class="text-white font-semibold">Contact</h3>
+                    <p class="text-slate-400"><i class="fa-solid fa-map-marker-alt text-indigo-300 mr-2"></i>123 AI Street, Colombo, Sri Lanka</p>
+                    <p class="text-slate-400"><i class="fa-solid fa-envelope text-indigo-300 mr-2"></i>hello@prompthub.com</p>
+                    <p class="text-slate-400"><i class="fa-solid fa-phone text-indigo-300 mr-2"></i>+94 77 123 4567</p>
+                </div>
+                <div class="space-y-4">
+                    <h3 class="text-white font-semibold">Follow Us</h3>
+                    <div class="flex flex-wrap gap-3">
+                        <a href="#" class="h-12 w-12 rounded-3xl bg-slate-800/90 flex items-center justify-center text-indigo-300 hover:bg-indigo-500/15 transition duration-300"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="h-12 w-12 rounded-3xl bg-slate-800/90 flex items-center justify-center text-cyan-300 hover:bg-cyan-500/15 transition duration-300"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" class="h-12 w-12 rounded-3xl bg-slate-800/90 flex items-center justify-center text-pink-300 hover:bg-pink-500/15 transition duration-300"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="h-12 w-12 rounded-3xl bg-slate-800/90 flex items-center justify-center text-sky-300 hover:bg-sky-500/15 transition duration-300"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="h-10 w-10 rounded-3xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20">
+                            <i class="fa-solid fa-rocket"></i>
+                        </div>
+                        <div class="h-10 w-10 rounded-3xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white shadow-lg shadow-emerald-500/20">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <div class="h-10 w-10 rounded-3xl bg-gradient-to-br from-orange-500 to-rose-500 flex items-center justify-center text-white shadow-lg shadow-orange-500/20">
+                            <i class="fa-solid fa-lightbulb"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10 border-t border-slate-800/70 pt-6 text-center text-slate-500 text-sm">© 2026 Prompt Hub. Crafted with AI-inspired style.</div>
+        </div>
     </footer>
 
+    <!-- JavaScript Functionality -->
     <script>
-        function copyText(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                return true;
-            }).catch(() => {
-                return false;
+        function copyPrompt(button) {
+            const card = button.closest('.prompt-card');
+            const promptText = card.querySelector('.prompt-text').innerText;
+            navigator.clipboard.writeText(promptText).then(() => {
+                const originalContent = button.innerHTML;
+                button.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                button.classList.remove('bg-gradient-to-r', 'from-fuchsia-500', 'via-indigo-500', 'to-cyan-500');
+                button.classList.add('bg-emerald-600');
+                setTimeout(() => {
+                    button.innerHTML = originalContent;
+                    button.classList.remove('bg-emerald-600');
+                    button.classList.add('bg-gradient-to-r', 'from-fuchsia-500', 'via-indigo-500', 'to-cyan-500');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
             });
         }
 
-        document.querySelectorAll('.copy-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                const promptText = button.closest('article').querySelector('.prompt-text').innerText;
-                copyText(promptText);
-                button.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
-                setTimeout(() => {
-                    button.innerHTML = '<i class="fa-regular fa-copy"></i> Copy prompt';
-                }, 1800);
-            });
-        });
+        function searchPrompts() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.getElementsByClassName('prompt-card');
+            for (let i = 0; i < cards.length; i++) {
+                const promptText = cards[i].querySelector('.prompt-text').innerText.toLowerCase();
+                cards[i].style.display = promptText.includes(input) ? 'block' : 'none';
+            }
+        }
 
-        document.getElementById('heroCopyButton').addEventListener('click', () => {
-            copyText('Neon cyberpunk city at night, rain reflections, cinematic lighting, 8K');
-            const button = document.getElementById('heroCopyButton');
-            button.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
-            setTimeout(() => {
-                button.innerHTML = '<i class="fa-regular fa-copy"></i> Copy prompt';
-            }, 1800);
-        });
+        function filterModel(event, model) {
+            const cards = document.getElementsByClassName('prompt-card');
+            const buttons = document.getElementsByClassName('filter-btn');
+            for (let btn of buttons) {
+                btn.classList.remove('bg-indigo-600', 'bg-gradient-to-r', 'from-indigo-500', 'via-violet-500', 'to-fuchsia-500');
+                btn.classList.add('bg-slate-800');
+            }
+            event.target.classList.remove('bg-slate-800');
+            event.target.classList.add('bg-gradient-to-r', 'from-indigo-500', 'via-violet-500', 'to-fuchsia-500');
+            for (let i = 0; i < cards.length; i++) {
+                const cardModel = cards[i].getAttribute('data-model');
+                cards[i].style.display = model === 'all' || cardModel === model ? 'block' : 'none';
+            }
+        }
 
-        const observer = new IntersectionObserver(entries => {
+        const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+                if (!entry.isIntersecting) return;
+                entry.target.classList.remove('opacity-0', 'translate-y-8', '-translate-x-8', 'translate-x-8');
+                entry.target.classList.add('opacity-100', 'translate-y-0', 'translate-x-0');
+                revealObserver.unobserve(entry.target);
             });
-        }, { threshold: 0.2 });
-        document.querySelectorAll('.fade-slide').forEach(el => observer.observe(el));
+        }, { threshold: 0.25 });
+
+        document.querySelectorAll('.reveal-card').forEach(card => revealObserver.observe(card));
     </script>
 </body>
 
